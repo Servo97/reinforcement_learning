@@ -27,10 +27,10 @@ class PolicyNetwork(nn.Module):
     def get_action(self, state):
         state = torch.from_numpy(state).float().unsqueeze(0)
         probs = self.forward(Variable(state))
-        a_star = np.random.choice(self.n_actions, p = np.squeeze(probs.detach().numpy()))
-        # a_star = np.argmax(np.squeeze(probs.detach().numpy()))
-        log_prob = torch.log(probs.squeeze(0)[a_star])
-        return a_star, log_prob
+        action = np.random.choice(self.n_actions, p = np.squeeze(probs.detach().numpy()))
+        # action = np.argmax(np.squeeze(probs.detach().numpy()))
+        log_prob = torch.log(probs.squeeze(0)[action])
+        return action, log_prob
 
 def update_policy(policy_nw, rewards, log_probs):
     discounted_rewards = []
